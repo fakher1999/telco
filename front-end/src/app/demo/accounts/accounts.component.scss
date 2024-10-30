@@ -1,0 +1,146 @@
+/* Ensure the parent div takes the full height of the viewport */
+.vh-100 {
+    height: 100vh;
+  }
+  
+  /* Center the row both horizontally and vertically */
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Center form elements and add spacing */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .form-check {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .btn-block {
+    width: 100%;
+  }
+  /* Styling for the tabs */
+.custom-tabs .mat-tab-label {
+  color: white; /* Default tab label color */
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-tabs .mat-tab-label-active {
+  background-color: #3f51b5; /* Active tab background */
+  color: #ffffff; /* Active tab label color */
+  border-radius: 50px 50px 0 0; /* Rounded edges for active tabs */
+}
+
+.custom-tabs .mat-ink-bar {
+  background-color: #ff4081; /* Custom ink bar color */
+}
+
+.custom-tabs .mat-tab-label:hover {
+  background-color: rgba(63, 81, 181, 0.2); /* Hover effect */
+}
+
+.account-management-container {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #3f51b5;
+}
+
+.btn-primary {
+  background-color: #3f51b5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #303f9f;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 15px;
+}
+
+::ng-deep .custom-tabs {
+  border-bottom: 2px solid #e2e8f0;
+}
+::ng-deep .custom-tabs .mat-mdc-tab {
+  padding: 12px 24px;
+  margin-right: 8px;
+  font-weight: 600;
+  color: #4a5568;
+  background-color: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: all 0.3s ease;
+}
+::ng-deep .custom-tabs .mat-mdc-tab:hover {
+  background-color: #edf2f7;
+}
+::ng-deep .custom-tabs .mdc-tab-indicator--active {
+  color: #2b6cb0;
+  background-color: #fff;
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+}
+.tab-content {
+  padding: 24px;
+  border: 2px solid #e2e8f0;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs > .mat-mdc-tab-header .mat-mdc-tab:last-child {
+  margin-right: 0; /* Remove margin-right for the last tab */
+}

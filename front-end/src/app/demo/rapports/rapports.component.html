@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Rapports" blockClass="pc-component">
+        <div class="container mt-4">
+            <h2>Rapports</h2>
+            <a routerLink="/create-rapport" class="btn btn-primary">Create New Rapport</a>
+
+            <div class="list-group">
+              <a *ngFor="let rapport of rapports" 
+                 [routerLink]="['/rapports', rapport._id]" 
+                 class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Rapport for Task: {{rapport.task?.taskName}}</h5>
+                  <small>Status: {{rapport.status}}</small>
+                </div>
+                <p class="mb-1">{{rapport.content.substring(0, 100)}}...</p>
+              </a>
+            </div>
+          </div>
+      </app-card>
+    </div>
+  </div>
+  

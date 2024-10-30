@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Agents" blockClass="pc-component">
+        <div class="row">
+          <div class="col-12 mx-auto">
+            <!-- Use (click) event to trigger modal opening -->
+            <a routerLink="/accounts" class="btn btn-primary">Create New Agent</a>
+  
+            <table class="table mt-5">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Permissions</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let agent of agents">
+                  <td>{{ agent.email }}</td>
+                  <td> 
+                    <ng-container *ngFor="let permission of agent.permissions">
+                    <span class="alert alert-info mx-1">{{ permission }}</span>
+                  </ng-container>
+                </td>
+                 
+                  <td> 
+                    <button (click)="delete( agent._id )" class="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+
+      </app-card>
+    </div>
+  </div>
+  

@@ -1,0 +1,21 @@
+<h5 class="mb-3">Analytics Report</h5>
+<div class="card">
+  <div class="list-group list-group-flush">
+
+  </div>
+  <div class="card-body px-2">
+    <div class="chart">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [plotOptions]="chartOptions.plotOptions"
+        [xaxis]="chartOptions.xaxis"
+        [colors]="chartOptions.colors"
+        [stroke]="chartOptions.stroke"
+        [yaxis]="chartOptions.yaxis"
+        [grid]="chartOptions.grid"
+        [tooltip]="chartOptions.tooltip"
+      ></apx-chart>
+    </div>
+  </div>
+</div>

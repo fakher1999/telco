@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Rapports" blockClass="pc-component">
+        <div class="container mt-4">
+          <h2>Create New Rapport</h2>
+          <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="taskId">Select Task</label>
+              <select
+                class="form-control"
+                id="taskId"
+                [(ngModel)]="taskId"
+                name="taskId"
+                required
+              >
+                <option *ngFor="let task of tasks" [value]="task._id">
+                  {{ task.taskName }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="content">Rapport Content</label>
+              <textarea
+                class="form-control"
+                id="content"
+                [(ngModel)]="content"
+                name="content"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!taskId || !content">
+              Create Rapport
+            </button>
+          </form>
+        </div>
+      </app-card>
+    </div>
+  </div>
+  

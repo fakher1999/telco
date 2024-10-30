@@ -1,0 +1,111 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="auth-header">
+        <a href="javascript:"><img src="assets/images/dowmap.png" style="width: 65px; " alt="logo img" /></a>
+      </div>
+      <div class="cards-container">
+        <div class="card my-5"  *ngIf="step == 1">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+              <h3 class="mb-0"><b>Sign up</b></h3>
+              <a [routerLink]="['/login']" class="link-primary">Already have an account?</a>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="firstName">First Name*</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="First Name" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="lastName">Last Name*</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="company">Company</label>
+              <input type="text" class="form-control" id="company" placeholder="Company" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="title">Title</label>
+              <input type="title" class="form-control" id="title" placeholder="title" />
+            </div>          
+            <div class="form-group mb-3">
+              <label class="form-label" for="emailAddress">Email Address*</label>
+              <input type="email" class="form-control" id="emailAddress" placeholder="Email Address" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="applicantNumber">Applicant Number*</label>
+              <input type="number" class="form-control" id="applicantNumber" placeholder="Applicant Number" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="about">How did you hear about us !</label>
+              <input type="text" class="form-control" id="about" placeholder="We welcome to hear from you !" />
+            </div>  
+            <p class="mt-4 text-sm text-muted">
+              By Signing up, you agree to our
+              <a href="javascript:" class="text-primary">Terms of Service</a>
+              and
+              <a href="javascript:" class="text-primary">Privacy Policy</a>
+            </p>
+            <div class="d-grid mt-3">
+              <button type="button" class="btn btn-primary" (click)="next()" >Next</button>
+            </div>
+          </div>
+        </div>
+        <div class="card my-5"  *ngIf="step == 2">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+              <h3 class="mb-0"><b>Company informations</b></h3>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="companyName">Company Name</label>
+              <input type="text" class="form-control" id="companyName" placeholder="Company Name" />
+            </div>
+            <label>Logo</label>
+            <input (change)="selectLogo($event)" type="file"  class="form-control m-1" placeholder="logo">
+            <div class="form-group mb-3">
+              <label class="form-label" for="companyAddress">Company Address</label>
+              <input type="title" class="form-control" id="companyAddress" placeholder="Company Address" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="website">Website</label>
+              <input type="text" class="form-control" id="website" placeholder="Website" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="primaryFocus">Primary Focus</label>
+              <input type="text" class="form-control" id="primaryFocus" placeholder="Primary Focus" />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="vatNumber">Vat Number</label>
+              <input type="number" class="form-control" id="vatNumber" placeholder="Vat Number" />
+            </div>
+            <label>RNE</label>
+            <input (change)="selectRNE($event)" type="file"  class="form-control m-1" placeholder="RNE">
+            <label>Patente</label>
+            <input (change)="selectPATENTE($event)" type="file"  class="form-control m-1" placeholder="Patente">
+            <p class="mt-4 text-sm text-muted">
+              By Signing up, you agree to our
+              <a href="javascript:" class="text-primary">Terms of Service</a>
+              and
+              <a href="javascript:" class="text-primary">Privacy Policy</a>
+            </p>
+            <div class="row mt-3">
+              <button type="button" class="btn btn-primary col-5 mx-auto" (click)="step = 1">Prevoice</button>
+              <button type="button" class="btn btn-primary  col-5 mx-auto">Create Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+        
+    </div>
+  </div>
+</div>

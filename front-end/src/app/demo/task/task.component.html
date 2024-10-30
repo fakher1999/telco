@@ -1,0 +1,248 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Hello Card" blockClass="pc-component">
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <!-- Use (click) event to trigger modal opening -->
+          <button (click)="openModal() ; toEdit= false;" class="mt-5 btn btn-success">Create task</button>
+
+          <table class="table mt-5">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Task type</th>
+                <th>User Number</th>
+                <th>Price</th>
+                <th>Confirmed</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of tasks">
+                <td>{{ task.taskName }}</td>
+                <td>{{ task.target.zones?.join(', ') }}</td>
+                <td>{{ task.description}}</td>
+                <td><span class='alert alert-danger' style="height: 30px;padding: 5px;" *ngIf="task.taskType != 'quiz'">  {{ task.taskType }}</span> <button *ngIf="task.taskType == 'quiz'" (click)="redirectToEditQuiz( task._id )" class="btn btn-warning">Edit Quiz</button></td>
+                <td>{{ task.numberOfEligibleUsers }}</td>
+                <td>{{ task.price }}</td>
+                <td [innerHTML]="task.confirmed ? '<span class=\'alert alert-success\'>Yes</span>' : '<span class=\'alert alert-success\'>No</span>'"></td>
+                <td> 
+                  <button (click)="edit( task._id )" class="btn btn-warning">Edit</button>
+                </td>
+                <td> 
+                  <button (click)="delete( task._id )" class="btn btn-danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal Section -->
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <!-- Show modal based on Angular variable -->
+          <div *ngIf="isModalOpen" class="modal fade show d-block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Create new Task</h5>
+                  <!-- Close the modal via Angular function -->
+                  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="container mt-4">
+                    <div class="mb-3">
+                      <label for="taskName" class="form-label">Task Name</label>
+                      <input id="taskName" formControlName="taskName" class="form-control" required>
+                    </div>
+                    <!-- Add this inside your form, before the submit button -->
+                    <div class="mb-3">
+                      <label for="tags" class="form-label">Tags</label>
+                      <div class="position-relative">
+                        <input
+                          id="tags"
+                          [formControl]="tagInput"
+                          class="form-control"
+                          (keydown)="addTag($event)"
+                          placeholder="Type tag and press comma or enter"
+                          autocomplete="off"
+                        >
+                        <!-- Autocomplete dropdown -->
+                        <div class="dropdown-menu show position-absolute w-100" 
+                            *ngIf="filteredTags.length && tagInput.value">
+                          <button
+                            *ngFor="let tag of filteredTags"
+                            class="dropdown-item"
+                            type="button"
+                            (click)="selectTag(tag)"
+                          >
+                            {{ tag }}
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Selected tags -->
+                      <div class="mt-2">
+                        <span *ngFor="let tag of selectedTags" 
+                              class="badge bg-primary me-2 mb-2">
+                          {{ tag }}
+                          <button type="button" 
+                                  class="btn-close btn-close-white ms-2"
+                                  (click)="removeTag(tag)">
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="taskType" class="form-label">Task Type</label>
+                      <select id="taskType" formControlName="taskType" class="form-select" required>
+                        <option value="quiz">Quiz</option>
+                        <option value="mission">Mission</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="description" class="form-label">Description (Optional)</label>
+                      <textarea id="description" formControlName="description" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="sex" class="form-label">Target Gender</label>
+                      <select id="sex" formControlName="sex" class="form-select">
+                        <option value="">All</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                    <div class="mb-3" formGroupName="ageRange">
+                      <label for="ageRange.min" class="form-label">Age Range</label>
+                      <div class="d-flex">
+                        <input id="ageRange.min" formControlName="min" type="number" class="form-control me-2"
+                          placeholder="Min Age">
+                        <input id="ageRange.max" formControlName="max" type="number" class="form-control"
+                          placeholder="Max Age">
+                      </div>
+                    </div>
+                    <!-- Replace the existing zone and subRegion selects with this -->
+<div class="mb-3">
+  <label class="form-label">Zones and Regions</label>
+  <div class="border rounded p-3">
+    <!-- Zones Accordion -->
+    <div class="accordion" id="zonesAccordion">
+      <div *ngFor="let zone of zones | keyvalue; let i = index" class="accordion-item border-0">
+        <div class="d-flex align-items-center mb-2">
+          <!-- Zone Checkbox -->
+          <div class="form-check">
+            <input 
+              class="form-check-input" 
+              type="checkbox"
+              [id]="'zone' + i"
+              [checked]="selectedZones.includes(zone.key)"
+              (change)="toggleZone(zone.key)"
+            >
+            <label class="form-check-label" [for]="'zone' + i">
+              {{ zone.key }}
+            </label>
+          </div>
+          
+          <!-- Expand/Collapse Button -->
+          <button 
+            class="btn btn-link ms-auto py-0"
+            type="button"
+            [attr.aria-expanded]="expandedZones[zone.key]"
+            (click)="toggleZoneExpand(zone.key)"
+          >
+            {{ expandedZones[zone.key] ? '−' : '+' }}
+          </button>
+        </div>
+
+        <!-- Regions List -->
+        <div 
+          class="ms-4 collapse"
+          [class.show]="expandedZones[zone.key]"
+        >
+          <div *ngFor="let region of zone.value; let j = index" class="form-check">
+            <input 
+              class="form-check-input" 
+              type="checkbox"
+              [id]="'region' + i + j"
+              [checked]="selectedRegions.includes(region)"
+              (change)="toggleRegion(zone.key, region)"
+              [disabled]="!selectedZones.includes(zone.key)"
+            >
+            <label 
+              class="form-check-label" 
+              [for]="'region' + i + j"
+              [class.text-muted]="!selectedZones.includes(zone.key)"
+            >
+              {{ region }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Items Display -->
+  <div class="mt-3" *ngIf="selectedZones.length || selectedRegions.length">
+    <div *ngIf="selectedZones.length" class="mb-2">
+      <strong>Selected Zones:</strong>
+      <span *ngFor="let zone of selectedZones" class="badge bg-primary me-2">
+        {{zone}}
+        <button type="button" class="btn-close btn-close-white ms-2" 
+                (click)="removeZone(zone)">
+        </button>
+      </span>
+    </div>
+    <div *ngIf="selectedRegions.length">
+      <strong>Selected Regions:</strong>
+      <span *ngFor="let region of selectedRegions" class="badge bg-secondary me-2">
+        {{region}}
+        <button type="button" class="btn-close btn-close-white ms-2" 
+                (click)="removeRegion(region)">
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+
+                    <div class="mb-3">
+                      <label for="startDate" class="form-label">Start Date</label>
+                      <input id="startDate" formControlName="startDate" type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="endDate" class="form-label">End Date</label>
+                      <input id="endDate" formControlName="endDate" type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                      <button type="button" (click)="calculatePrice()" class="btn btn-primary">Calculate Price</button>
+                    </div>
+                    <div *ngIf="eligibleUsers != undefined" class="mb-3">
+                      <p>Eligible Users: {{ eligibleUsers }}</p>
+                      <p>Total Price: {{ totalPrice }}</p>
+                    </div>
+                   
+                  </form>
+                  <div class="mb-3" *ngIf="eligibleUsers != undefined">
+                    <label for="nbrUser" class="form-label">Fix number of users:</label>
+                    <input id="nbrUser" [min]="eligibleUsers/totalPrice" [max]="eligibleUsers" (change)="changeUserChnageBudget(true,false)" [(ngModel)]="nbrUser" type="number" class="form-control" required>
+                  </div>
+                  <div class="mb-3" *ngIf="eligibleUsers != undefined">
+                    <label for="amount" class="form-label">Fix your Amount:</label>
+                    <input id="amount" [min]="totalPrice/eligibleUsers" [max]="totalPrice" (change)="changeUserChnageBudget(false,true)" [(ngModel)]="amount" type="number" class="form-control" required>
+                  </div>
+                  <div>
+                    <button type="submit" class="btn btn-success" *ngIf='!toEdit' (click)="onSubmit()">Create Task</button>
+                    <button type="submit" class="btn btn-success" *ngIf='toEdit' (click)="update()">Update Task</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
